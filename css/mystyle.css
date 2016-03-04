@@ -19,13 +19,13 @@ body {
 	background: -moz-linear-gradient(bottom,  #d2d2d2 0%, #eaeaea 59%);*/
 	background: linear-gradient(to bottom,  #ede8e3 0%,#c3b3a2 80%);
 }
+
+/****************** header ***********************/
 header {
 	box-shadow: 0 1px 7px #aaaaaa;
 	/*-webkit-box-shadow: 0 1px 7px #aaaaaa;*/
-}
-#top_container {
 	height: 40px;
-	margin-bottom: 40px;
+	margin-bottom: 30px;
 	color: inherit;
 	background: #fff;
 }
@@ -43,7 +43,30 @@ h4 {
 	overflow: hidden;
 	float: left;
 }
-/********************   left_panel  ******************/
+h4:hover {
+	opacity: 0.8;
+}
+
+.menu_item {
+	float: left;
+	width: 60px;
+	margin-right: 10px;
+}
+.menu_item:last-child {
+	border-left: 1px solid #aaa;
+	padding-left: 15px;
+	margin-right: 20px;
+}
+.menu_item > a {
+	color: #888888;
+	background-color: inherit;
+	text-decoration: none;
+	border-bottom: none;
+}
+.menu_item > a:hover {
+	opacity: 0.8;
+}
+/********************   left_container  ******************/
 #set_list {
 	width: 200px;
 	border: 1px solid #888888;
@@ -56,28 +79,35 @@ h4 {
 	background: #fff;
 }
 #set_list > a:first-child {
-	background: rgba(237,232,227,0);
-	color: #888888;
-	border-bottom: 2px solid #888888;
+	/*background-color: #e4e4e4;*/
+	background-color: #253A54;
+	color: #fff;
+	border-top: none;border-right: none;border-left: none;
+	border-bottom: 1px solid #888888;
+	height: 30px;
+	margin: 0 auto;
+	padding-top: 6px;
 }
 #set_list > a:first-child:hover {
 	text-decoration: none;
 	cursor: default;
 	opacity: 1;
-	border-bottom: 2px solid #888888;
+	border-bottom: 1px solid #888888;
 }
 #set_list > a:hover {
 	opacity: 0.8;
 }
-/********************   main_panel  ******************/
+
+
+/********************   main_container  ******************/
 #btn {
 	width: 200px;
 	margin: 0 auto;
 	padding: 7px;
 	border-radius: 5px;
 	color: inherit;
-	background: #337ab7;
-	box-shadow: 1px 5px 3px #888888;
+	background: #4682b4;
+	box-shadow: 1px 4px 3px #888888;
 	cursor: pointer;
 }
 #btn:active {
@@ -108,23 +138,30 @@ h4 {
 	/*-webkit-backface-visibility: hidden;*/
 }
 #card-front {
-	background: #fff;
-	color: #333;
+	background-color: #253A54;
+	color: #fff;
 }
 #card-back {
-	color: inherit;
-	background: #00aaff;
+	color: #555;
+	background: #fff;
 	transform: rotateY(180deg);
 }
 .open {
 	transform: rotateY(180deg);
 }
+
+
+/********************   as_container  ******************/
+
 #ad_container {
 	color: #888888;
 	background: #fff;
 	height: 300px;
 	text-align: center;
 }
+
+/********************   footer  ******************/
+
 footer {
 	height: 40px;
 	font-size: 13px;
