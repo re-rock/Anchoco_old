@@ -2,22 +2,17 @@
 	'use strict';
 
 	var words = [
-		{'en': 'read', 'ja': '読む' },
-		{'en': 'write', 'ja': '書く' },
-		{'en': 'eat', 'ja': '食べる' },
-		{'en': 'run', 'ja': '走る' },
-		{'en': 'walk', 'ja': '歩く' },
-		{'en': 'cook', 'ja': '料理する' },
-		{'en': 'talk', 'ja': '話す' },
-		{'en': 'push', 'ja': '押す' },
-		{'en': 'drink', 'ja': '飲む' },
-		{'en': 'byte', 'ja': '噛む' }
+		{'en': 'was so biside', 'ja': 'ひどく取り乱した' },
+		{'en': 'scarcely', 'ja': 'ほとんど〜できなかった' },
+		{'en': 'tell fact from fiction', 'ja': '現実と虚構の区別' },
+		{'en': 'novel', 'ja': '小説' },
+		{'en': 'gift (for) poetry', 'ja': '詩の才能' }
 	];
 
 	var card = document.getElementById('card');
 	var cardFront = document.getElementById('card-front');
 	var cardBack = document.getElementById('card-back');
-	var btn = document.getElementById('btn');
+	var btn = document.getElementById('btn_next');
 	card.addEventListener('click', function() {
 		flip();
 	});

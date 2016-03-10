@@ -1,25 +1,25 @@
 @import url(https://fonts.googleapis.com/css?family=Gravitas+One);
 
-html,body {
-	/*height: 100%;*/
-	height: 700px;
+html, body {
+	height: 100%;
 }
 body {
 	font-family: 'Times New Roman', sans-serif;
 	margin: 0;
 	text-align: center;
-	color: #fff;
-	background-color: inherit;
+	color: #253A54;
+	background-image: url(../img/1.png);
 }
 #container {
 	margin: 0 auto;
 	height: 100%;
 	min-height: 100%;
-	/*background: -webkit-linear-gradient(bottom,  #d2d2d2 0%,#eaeaea 59%);
-	background: -moz-linear-gradient(bottom,  #d2d2d2 0%, #eaeaea 59%);*/
-	background: linear-gradient(to bottom,  #ede8e3 0%,#c3b3a2 80%);
+	height: 100%;
+	min-height: 100%;
 }
-
+body > #container {
+	height: auto;
+}
 /****************** header ***********************/
 header {
 	box-shadow: 0 1px 7px #aaaaaa;
@@ -44,9 +44,9 @@ h4 {
 	float: left;
 }
 h4:hover {
-	opacity: 0.8;
+	color: #CC9F4D;
+	transition: all .3s ease-in-out;
 }
-
 .menu_item {
 	float: left;
 	width: 60px;
@@ -63,8 +63,9 @@ h4:hover {
 	text-decoration: none;
 	border-bottom: none;
 }
-.menu_item > a:hover {
-	opacity: 0.8;
+a:hover {
+	color: #CC9F4D;
+	transition: all .3s ease-in-out;
 }
 /********************   left_container  ******************/
 #set_list {
@@ -73,13 +74,18 @@ h4:hover {
 	margin-left: 20px;
 	border-radius: 5px 5px;
 	box-shadow: 2px 2px 1px #888;
+	font-weight: bold;
 }
 #set_list > a {
 	color: #888888;
 	background: #fff;
+	transition: all .3s ease-in-out;
 }
+#set_list > a:hover {
+	color: #CC9F4D;
+}
+
 #set_list > a:first-child {
-	/*background-color: #e4e4e4;*/
 	background-color: #253A54;
 	color: #fff;
 	border-top: none;border-right: none;border-left: none;
@@ -94,33 +100,80 @@ h4:hover {
 	opacity: 1;
 	border-bottom: 1px solid #888888;
 }
-#set_list > a:hover {
-	opacity: 0.8;
-}
 
 
 /********************   main_container  ******************/
-#btn {
-	width: 200px;
+#card_title {
+	font-size: 20px;
+	padding-bottom: 10px;
 	margin: 0 auto;
-	padding: 7px;
+}
+.progressBarContainer {
+	width: 200px;
+	height: 10px;
+	background: rgba(8,102,220,.2);
+	margin: 0 30%;
+	overflow: hidden;
+	border-radius: 5px;
+	float: left;
+	text-align: center;
+}
+.progressBarValue {
+	height: 1.66em;
+	background: #0866dc;
+	background: rgba(8,102,220,.75);
+}
+#card_number {
+	font-size: 17px;
+	width: 100px;
+	display: inline;
+}
+#btn_group {
+	height:60px;
+	width: 260px;
+	margin: 0 auto;
 	border-radius: 5px;
 	color: inherit;
-	background: #4682b4;
-	box-shadow: 1px 4px 3px #888888;
 	cursor: pointer;
+	font-size: 0;
 }
-#btn:active {
-	box-shadow: 0 2px 1px #888888;
+div.card_button {
+	box-shadow: 1px 2px 2px #888888;
+	float: left;
+	height: 40px;
+	margin: 0;
+	background: #4682b4;
+	font-size: 13px;
+	color: white;
+	padding: 12px 10px 0 10px;
 }
+div.card_button:active {
+	box-shadow: 0 1px 1px #888888;
+	text-decoration: none;
+}
+div#btn_return {
+	border-radius: 5px 0 0 5px;
+	border-right: 1px solid rgb(228, 214, 169);
+	width: 80px;
+
+}
+#btn_role {
+	border-right: 1px solid rgb(228, 214, 169);
+	width: 100px;
+}
+#btn_next {
+	border-radius: 0 5px 5px 0;
+	width: 80px;
+}
+
 #card {
 	box-shadow: 1px 1px 3px #888888;
 	letter-spacing: 1px;
-	margin: 0 auto 20px auto;
+	margin: 5px auto 20px auto;
 	width: 400px;
 	height: 100px;
 	cursor: pointer;
-	font-size: 38px;
+	font-size: 30px;
 	line-height: 100px;
 	perspective: 100px;
 	transform-style: preserve-3d;
@@ -138,12 +191,12 @@ h4:hover {
 	/*-webkit-backface-visibility: hidden;*/
 }
 #card-front {
-	background-color: #253A54;
-	color: #fff;
-}
-#card-back {
 	color: #555;
 	background: #fff;
+}
+#card-back {
+	color: #fff;
+	background-color: #253A54;
 	transform: rotateY(180deg);
 }
 .open {
@@ -155,11 +208,13 @@ h4:hover {
 
 #ad_container {
 	color: #888888;
-	background: #fff;
 	height: 300px;
 	text-align: center;
+	padding: 0;
 }
-
+#ad_container img {
+	margin: 5px auto;
+}
 /********************   footer  ******************/
 
 footer {
@@ -169,10 +224,15 @@ footer {
 	margin-top: 20px;
 	color: inherit;
 	background: #fff;
-	box-shadow: 0 -2px 7px #aaaaaa;
-	/*-webkit-box-shadow: 0 -2px 7px #aaaaaa;*/
+	box-shadow: 0 -1px 1px #aaaaaa;
+	/*-webkit-box-shadow: 0 1px 1px #aaaaaa;*/
 }
-footer>div {
+#copyright {
 	color: #888888;
 	background-color: inherit;
+	box-sizing: border-box;
+	margin-top: 30px;
 }
+
+/* progressBar表示用クラス */
+.value-00{width:0%;}.value-01{width:1%;}.value-02{width:2%;}.value-03{width:3%;}.value-04{width:4%;}.value-05{width:5%;}.value-06{width:6%;}.value-07{width:7%;}.value-08{width:8%;}.value-09{width:9%;}.value-10{width:10%;}.value-11{width:11%;}.value-12{width:12%;}.value-13{width:13%;}.value-14{width:14%;}.value-15{width:15%;}.value-16{width:16%;}.value-17{width:17%;}.value-18{width:18%;}.value-19{width:19%;}.value-20{width:20%;}.value-21{width:21%;}.value-22{width:22%;}.value-23{width:23%;}.value-24{width:24%;}.value-25{width:25%;}.value-26{width:26%;}.value-27{width:27%;}.value-28{width:28%;}.value-29{width:29%;}.value-30{width:30%;}.value-31{width:31%;}.value-32{width:32%;}.value-33{width:33%;}.value-34{width:34%;}.value-35{width:35%;}.value-36{width:36%;}.value-37{width:37%;}.value-38{width:38%;}.value-39{width:39%;}.value-40{width:40%;}.value-41{width:41%;}.value-42{width:42%;}.value-43{width:43%;}.value-44{width:44%;}.value-45{width:45%;}.value-46{width:46%;}.value-47{width:47%;}.value-48{width:48%;}.value-49{width:49%;}.value-50{width:50%;}.value-51{width:51%;}.value-52{width:52%;}.value-53{width:53%;}.value-54{width:54%;}.value-55{width:55%;}.value-56{width:56%;}.value-57{width:57%;}.value-58{width:58%;}.value-59{width:59%;}.value-60{width:60%;}.value-61{width:61%;}.value-62{width:62%;}.value-63{width:63%;}.value-64{width:64%;}.value-65{width:65%;}.value-66{width:66%;}.value-67{width:67%;}.value-68{width:68%;}.value-69{width:69%;}.value-70{width:70%;}.value-71{width:71%;}.value-72{width:72%;}.value-73{width:73%;}.value-74{width:74%;}.value-75{width:75%;}.value-76{width:76%;}.value-77{width:77%;}.value-78{width:78%;}.value-79{width:79%;}.value-80{width:80%;}.value-81{width:81%;}.value-82{width:82%;}.value-83{width:83%;}.value-84{width:84%;}.value-85{width:85%;}.value-86{width:86%;}.value-87{width:87%;}.value-88{width:88%;}.value-89{width:89%;}.value-90{width:90%;}.value-91{width:91%;}.value-92{width:92%;}.value-93{width:93%;}.value-94{width:94%;}.value-95{width:95%;}.value-96{width:96%;}.value-97{width:97%;}.value-98{width:98%;}.value-99{width:99%;}.value-100 {width:100%;}
