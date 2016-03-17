@@ -17,81 +17,86 @@
 </head>
 
 <body>
-  <div id="container">
+  <div class="container-fluid">
+    <div class="row">
 
-    <header id="header">
-      <div class="col-md-12 col-xs-12 navbar-fixed-top" id="top_menu">
-        <a href="#"><h4><i class="fa fa-book fa-fw"></i>Anchoco</h4></a>
-        <ul class="navbar-right" id=nav_list>
-          <li class="menu_item"><a href="#">ABOUT</a></li>
-          <li class="menu_item"><a href="#">LOGIN</a></li>
-        </ul>
-      </div>
-    </header>
-
-
-    <!-- 左パネル -->
-    <div id="left_container" class="col-md-3 col-xs-4">
-      <div class="list-group" id="set_list">
-        <a href="#" class="list-group-item">
-          SETTINGS
-        </a>
-        <a href="#" class="list-group-item">Shuffle</a>
-        <a href="#" class="list-group-item">Reverse</a>
-        <a href="#" class="list-group-item">Hide Checks</a>
-        <a href="#" class="list-group-item">Auto Turning</a>
-        <a href="#" class="list-group-item">Sound</a>
-        <a href="#" class="list-group-item">Edit</a>
-      </div>
-    </div>
-
-    <!-- メインパネル -->
-    <div id="main_container" class="col-md-6 col-xs-8">
-      <div id="card_title">カードタイトル</div>
-
-      <div class="progressBar">
-        <div class="progressBarContainer">
-          <div class="progressBarValue value-15"></div>
+      <!-- header -->
+      <header id="header">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navbar-fixed-top" id="top_menu">
+          <a href="#"><h4><i class="fa fa-book fa-fw"></i>Anchoco</h4></a>
+          <ul class="navbar-right" id=nav_list>
+            <li class="menu_item"><a href="#">ABOUT</a></li>
+            <li class="menu_item"><a href="#">LOGIN</a></li>
+          </ul>
         </div>
-        <div id="card_number">3/20</div>
-        <i class="fa fa-check-square-o"></i>
-        <i class="fa fa-square-o"></i>
-      </div>
+      </header>
 
-      <div id="card">
-        <div id="card-front"></div>
-        <div id="card-back"></div>
-      </div>
 
-      <div id="btn_group">
-        <div class="card_button" id="btn_return">
-          <i class="fa fa-backward"></i> BACK</div>
-          <div class="card_button" id="btn_role">
-            <i class="fa fa-refresh"></i> ROLE</div>
-            <div class="card_button" id="btn_next">NEXT
-              <i class="fa fa-forward"></i></div>
-            </div>
-          </div><!-- main_container -->
+      <!-- 左パネル -->
+      <div id="left_container" class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
 
-          <!-- アドパネル -->
-          <div id="ad_container" class="col-md-3 col-xs-12">
-            <img src="./img/ad01.gif" alt="ad">
-            <img src="./img/ad02.jpeg" alt="ad">
+        <ul class="list-group" id="set_list">
+          <li class="list-group-item">SETTINGS</li>
+          <li class="list-group-item">Select Anchoco</li>
+          <li class="list-group-item">Shuffle<input type="checkbox" id="shuffle" value="off"></li>
+          <li class="list-group-item">Reverse<input type="checkbox" id="reverse" value="off"></li>
+          <li class="list-group-item">Hide Checks<input type="checkbox" id="hide_checks" value="off"></li>
+          <li class="list-group-item">Sound<input type="checkbox" id="sound" value="off"></li>
+          <li class="list-group-item">Edit</li>
+        </ul>
+
+      </div><!-- left_container -->
+
+
+      <!-- メインパネル -->
+      <div id="main_container" class="col-lg-6 col-md- col-sm-6 col-xs-6">
+
+        <div id="card_title">カードタイトル</div>
+
+        <div id="card_number">10/20</div>
+
+        <div class="progressBar">
+          <div class="progressBarFrame">
+            <div class="progressBarValue value-50"></div>
           </div>
+        </div><!-- progressBar -->
 
-          <!-- フッター -->
-          <footer class="col-md-12 col-xs-12 navbar-fixed-bottom">
-            <div id="copyright">Copyright &copy; 2016 - Anchoco, All Rights Reserved.</div>
-          </footer>
+        <div id="card">
+          <div id="card-front"></div>
+          <div id="card-back"></div>
+        </div>
 
+        <div id="btn_group">
+          <div class="card_button" id="btn_back"><i class="fa fa-backward"></i> BACK</div>
+          <div class="card_button" id="btn_role"><i class="fa fa-refresh"></i> FLIP</div>
+          <div class="card_button" id="btn_next">NEXT <i class="fa fa-forward"></i></div>
+        </div>
 
-        </div><!-- container -->
+      </div><!-- main_container -->
 
-        <!-- myscript読み込み -->
-        <script src="./js/myscript.js"></script>
-        <!-- LiveReload -->
-        <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
-        </script>
+      <!-- col-sm,col-xsサイズ時の位置調整 -->
+      <div class="col-sm-2 col-xs-2"></div>
 
-      </body>
-      </html>
+      <!-- アドパネル -->
+      <div id="ad_container" class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+        <img src="./img/ad01.gif" alt="ad">
+        <img src="./img/ad02.jpeg" alt="ad">
+      </div>
+
+      <!-- フッター -->
+      <footer class="col-md-12 col-xs-12 navbar-fixed-bottom">
+        <div id="copyright">Copyright &copy; 2016 - Anchoco, All Rights Reserved.</div>
+      </footer>
+
+    </div><!-- row -->
+  </div><!-- container -->
+
+  <!-- script読み込み -->
+  <script src="./js/jquery-2.2.1.min.js"></script>
+  <script src="./js/bootstrap-modal.js"></script>
+  <script src="./js/myscript.js"></script>
+  <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+  </script>
+
+</body>
+</html>

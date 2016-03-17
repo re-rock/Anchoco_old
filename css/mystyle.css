@@ -10,16 +10,10 @@ body {
 	color: #253A54;
 	background-image: url(../img/1.png);
 }
-#container {
-	margin: 0 auto;
-	height: 100%;
-	min-height: 100%;
-	height: 100%;
-	min-height: 100%;
+.container-fluid {
+	margin: 0 auto
 }
-body > #container {
-	height: auto;
-}
+
 /****************** header ***********************/
 header {
 	box-shadow: 0 1px 7px #aaaaaa;
@@ -76,16 +70,16 @@ a:hover {
 	box-shadow: 2px 2px 1px #888;
 	font-weight: bold;
 }
-#set_list > a {
+#set_list > li {
 	color: #888888;
 	background: #fff;
 	transition: all .3s ease-in-out;
 }
-#set_list > a:hover {
+#set_list > li:hover {
 	color: #CC9F4D;
 }
 
-#set_list > a:first-child {
+#set_list > li:first-child {
 	background-color: #253A54;
 	color: #fff;
 	border-top: none;border-right: none;border-left: none;
@@ -94,87 +88,59 @@ a:hover {
 	margin: 0 auto;
 	padding-top: 6px;
 }
-#set_list > a:first-child:hover {
+#set_list > li:first-child:hover {
 	text-decoration: none;
 	cursor: default;
 	opacity: 1;
 	border-bottom: 1px solid #888888;
 }
-
+#set_list > li > input {
+	position: relative;
+	right: 20px;
+	float: right;
+	/*margin-right: 20px;*/
+}
 
 /********************   main_container  ******************/
 #card_title {
 	font-size: 20px;
-	padding-bottom: 10px;
-	margin: 0 auto;
-}
-.progressBarContainer {
-	width: 200px;
-	height: 10px;
-	background: rgba(8,102,220,.2);
-	margin: 0 30%;
-	overflow: hidden;
-	border-radius: 5px;
-	float: left;
-	text-align: center;
-}
-.progressBarValue {
-	height: 1.66em;
-	background: #0866dc;
-	background: rgba(8,102,220,.75);
+	margin: 0 auto 15px auto;
 }
 #card_number {
-	font-size: 17px;
-	width: 100px;
-	display: inline;
+	font-weight: bold;
+	letter-spacing: 1px;
 }
-#btn_group {
-	height:60px;
-	width: 260px;
-	margin: 0 auto;
-	border-radius: 5px;
-	color: inherit;
-	cursor: pointer;
-	font-size: 0;
-}
-div.card_button {
-	box-shadow: 1px 2px 2px #888888;
+.progressBar {
 	float: left;
-	height: 40px;
-	margin: 0;
-	background: #4682b4;
-	font-size: 13px;
-	color: white;
-	padding: 12px 10px 0 10px;
+	margin: 0 66% 0 34%;
+	height: 20px;
 }
-div.card_button:active {
-	box-shadow: 0 1px 1px #888888;
-	text-decoration: none;
+.progressBarFrame {
+	overflow: hidden;
+	width: 	150px;
+	height: 10px;
+	background: rgba(8,102,220,.3);
+	border-radius: 5px;
 }
-div#btn_return {
-	border-radius: 5px 0 0 5px;
-	border-right: 1px solid rgb(228, 214, 169);
-	width: 80px;
-
+.progressBarValue {
+	height: 1.6em;
+	background: #0866dc;
 }
-#btn_role {
-	border-right: 1px solid rgb(228, 214, 169);
-	width: 100px;
-}
-#btn_next {
-	border-radius: 0 5px 5px 0;
-	width: 80px;
+#checkmark {
+	margin: 0 10% 0 90%;
+	height: 20px;
+	width: 30px;
 }
 
 #card {
 	box-shadow: 1px 1px 3px #888888;
 	letter-spacing: 1px;
-	margin: 5px auto 20px auto;
-	width: 400px;
-	height: 100px;
+	margin: 20px auto 10px auto;
+	width: 474px;
+	height: 150px;
 	cursor: pointer;
-	font-size: 30px;
-	line-height: 100px;
+	font-size: 25px;
+	line-height: 140px;
 	perspective: 100px;
 	transform-style: preserve-3d;
 	transition: .3s;
@@ -203,11 +169,50 @@ div#btn_return {
 	transform: rotateY(180deg);
 }
 
+#btn_group {
+	height:60px;
+	width: 260px;
+	margin: 0 auto;
+	border-radius: 5px;
+	color: inherit;
+	cursor: pointer;
+	font-size: 0;
+}
+div.card_button {
+	float: left;
+	color: white;
+	font-size: 13px;
+	height: 40px;
+	margin: 0;
+	background: #0866dc;
+	padding: 12px 10px 0 10px;
+	box-shadow: 1px 2px 2px #888888;
+}
+div.card_button:active {
+	box-shadow: 0 1px 1px #888888;
+	text-decoration: none;
+}
+div#btn_back {
+	border-radius: 5px 0 0 5px;
+	border-right: 1px solid rgb(228, 214, 169);
+	width: 80px;
+
+}
+#btn_role {
+	border-right: 1px solid rgb(228, 214, 169);
+	width: 100px;
+}
+#btn_next {
+	border-radius: 0 5px 5px 0;
+	width: 80px;
+}
+
 
 /********************   as_container  ******************/
 
 #ad_container {
 	color: #888888;
+	background-color: inherit;
 	height: 300px;
 	text-align: center;
 	padding: 0;
@@ -230,8 +235,6 @@ footer {
 #copyright {
 	color: #888888;
 	background-color: inherit;
-	box-sizing: border-box;
-	margin-top: 30px;
 }
 
 /* progressBar表示用クラス */
