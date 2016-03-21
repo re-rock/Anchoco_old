@@ -172,7 +172,7 @@ a:hover {
 #btn_group {
 	height:60px;
 	width: 260px;
-	margin: 0 auto;
+	margin: 30px auto 0 auto;
 	border-radius: 5px;
 	color: inherit;
 	cursor: pointer;
