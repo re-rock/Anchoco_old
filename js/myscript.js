@@ -1,6 +1,8 @@
 (function() {
   'use strict';
 
+  const source_title = "英単語1";
+
   const source_words = [{
     'en': '00 was so biside',
     'ja': '00 ひどく取り乱した'
@@ -31,6 +33,7 @@
   const reverse = document.getElementById('reverse');
   const shuffle = document.getElementById('shuffle');
 
+  const total = source_words.length;
   let words = source_words.concat();
   let words_at_reverse = source_words.concat();
   let words_at_shuffle;
@@ -41,6 +44,12 @@
   // 現在の裏カードの位置番号
   var back_card = 0;
 
+  //タイトル表示
+  title_display();
+  function title_display (){
+    $("#card_title").text(source_title);
+  }
+
   // カード初期表示
   initial_set();
 
@@ -50,7 +59,6 @@
   btn_role.addEventListener('click', function() {
     flip();
   });
-
   btn_next.addEventListener('click', function() {
     nextCard();
   });
@@ -66,31 +74,49 @@
     shuffle_set();
   });
 
+
   // カードの初期表示処理
 
   function initial_set() {
     cardFront.innerHTML = words[front_card]['en'];
     cardBack.innerHTML = words[back_card]['ja'];
+    number_display();
+    progressbar_display();
+  }
+
+  // カードの位置数を表示
+  function number_display(){
+    $("#position_number").text(front_card + 1 + " / " + total);
+  }
+
+  // プログレスバー表示
+  function progressbar_display() {
+    $(".progressBarValue").removeClass (function (index, className) {
+      return (className.match (/\bvalue-\d+/) || []).join(' ');
+    });
+    let prog_value = Math.floor((front_card + 1) / total * 100);
+    $(".progressBarValue").addClass("value-" + prog_value);
   }
 
   // カードをすすめる
-
   function forward() {
     cardFront.innerHTML = words[++front_card]['en'];
     cardBack.innerHTML = words[++back_card]['ja'];
+    $("#position_number").text(front_card + 1 + " / " + total);
     card.removeEventListener('transitionend', forward);
+    progressbar_display();
   }
 
   // カードを戻す
-
   function backward() {
     cardFront.innerHTML = words[--front_card]['en'];
     cardBack.innerHTML = words[--back_card]['ja'];
+    $("#position_number").text(front_card + 1 + " / " + total);
     card.removeEventListener('transitionend', backward);
+    progressbar_display();
   }
 
   // ページ進める処理判断
-
   function nextCard() {
     var current_num = front_card;
 
@@ -149,7 +175,8 @@
   });
 
 
-  // リバース機能
+  // ======================= リバース機能 ============================
+
   function reverse_set() {
 
     // リバース機能オフ→オン
@@ -212,21 +239,28 @@
   }
 
 
-  // シャッフル機能
+
+  // ======================= シャッフル機能 ============================
 
   function shuffle_set() {
+
     if ($("#shuffle").attr("value") === "off") {// オフ→オン
       $("#shuffle").attr("value", "on");
       words_at_shuffle = shuffle_cards(words);
       words = words_at_shuffle.concat();
+      front_card = 0;
+      back_card = 0;
       initial_set();
 
     } else { // シャッフルオン→オフ
       $("#shuffle").attr("value", "off");// オン→オフ
+
       // リバース機能がオンの時
       if ($("#reverse").attr("value") === "on") {
         words = source_words.concat();
         words = words.reverse();
+
+        // リバース機能がオフの時
       } else {
         words = source_words.concat();
       }
@@ -237,9 +271,9 @@
   }
 
   // シャッフルアルゴリズム(Fisher-Yates)
-    function shuffle_cards(words) {
+  function shuffle_cards(words) {
     let i = words.length;
-
+    debugger;
     while (i) {
       let j = Math.floor(Math.random() * i);
       let t = words[--i];
@@ -248,6 +282,26 @@
     }
     return words;
   }
+
+  // 効果音用スクリプト
+  $('#btn_back').easyAudioEffects({
+    ogg : "./sound/change_card01.ogg",
+    mp3 : "./sound/change_card01.mp3",
+    eventType : 'click',
+    playType : "oneShotMonophonic"
+  });
+  $('#btn_next').easyAudioEffects({
+    ogg : "./sound/change_card01.ogg",
+    mp3 : "./sound/change_card01.mp3",
+    eventType : 'click',
+    playType : "oneShotMonophonic"
+  });
+  $('#btn_role').easyAudioEffects({
+    ogg : "./sound/flip.ogg",
+    mp3 : "./sound/flip.mp3",
+    eventType : 'click',
+    playType : "oneShotMonophonic"
+  });
 
 
 })();
