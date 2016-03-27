@@ -1,39 +1,45 @@
 (function() {
   'use strict';
 
-  const source_title = "英単語1";
+  const source_title = "DUO3.0英単語";
 
+  // ck: 0=display, 1=nondisplay
   const source_words = [{
-    'en': '00 was so biside',
-    'ja': '00 ひどく取り乱した'
+    'fr': '00 was so biside',
+    'bk': '00 ひどく取り乱した',
+    'ck': 0
   }, {
-    'en': '01 scarcely',
-    'ja': '01 ほとんど〜できなかった'
+    'fr': '01 scarcely',
+    'bk': '01 ほとんど〜できなかった',
+    'ck': 0
   }, {
-    'en': '02 tell fact from fiction',
-    'ja': '02 現実と虚構の区別'
+    'fr': '02 tell fact from fiction',
+    'bk': '02 現実と虚構の区別',
+    'ck': 0
   }, {
-    'en': '03 novel',
-    'ja': '03 小説'
+    'fr': '03 novel',
+    'bk': '03 小説',
+    'ck': 0
   }, {
-    'en': '04 gift (for) poetry',
-    'ja': '04 詩の才能'
+    'fr': '04 gift (for) poetry',
+    'bk': '04 詩の才能',
+    'ck': 1
   }, {
-    'en': '05 however',
-    'ja': '05 どんなに〜でも'
+    'fr': '05 however',
+    'bk': '05 どんなに〜でも',
+    'ck': 1
   }, ];
-
 
   const card = document.getElementById('card');
   const cardFront = document.getElementById('card-front');
   const cardBack = document.getElementById('card-back');
   const btn_next = document.getElementById('btn_next');
   const btn_back = document.getElementById('btn_back');
-  const btn_role = document.getElementById('btn_role');
+  const btn_flip = document.getElementById('btn_flip');
   const reverse = document.getElementById('reverse');
   const shuffle = document.getElementById('shuffle');
 
-  const total = source_words.length;
+  let total = source_words.length;
   let words = source_words.concat();
   let words_at_reverse = source_words.concat();
   let words_at_shuffle;
@@ -56,7 +62,7 @@
   card.addEventListener('click', function() {
     flip();
   });
-  btn_role.addEventListener('click', function() {
+  btn_flip.addEventListener('click', function() {
     flip();
   });
   btn_next.addEventListener('click', function() {
@@ -73,13 +79,22 @@
   shuffle.addEventListener('click', function() {
     shuffle_set();
   });
+  // 効果音機能
+  $("#sound").bind('click', function() {
+    sound_effect();
+  });
+  // チェックマーク表示・非教示機能
+  checked_hide.addEventListener('click',function(){
+    $("#checked_hide").toggleClass("filter_on");
+    filterCheck();
+  });
 
 
   // カードの初期表示処理
 
   function initial_set() {
-    cardFront.innerHTML = words[front_card]['en'];
-    cardBack.innerHTML = words[back_card]['ja'];
+    cardFront.innerHTML = words[front_card]['fr'];
+    cardBack.innerHTML = words[back_card]['bk'];
     number_display();
     progressbar_display();
   }
@@ -95,13 +110,14 @@
       return (className.match (/\bvalue-\d+/) || []).join(' ');
     });
     let prog_value = Math.floor((front_card + 1) / total * 100);
-    $(".progressBarValue").addClass("value-" + prog_value);
+    $(".progressBarValue").addClass(`value-${prog_value}`);
+    // $(".progressBarValue").addClass("value-" + prog_value);
   }
 
   // カードをすすめる
   function forward() {
-    cardFront.innerHTML = words[++front_card]['en'];
-    cardBack.innerHTML = words[++back_card]['ja'];
+    cardFront.innerHTML = words[++front_card]['fr'];
+    cardBack.innerHTML = words[++back_card]["bk"];
     $("#position_number").text(front_card + 1 + " / " + total);
     card.removeEventListener('transitionend', forward);
     progressbar_display();
@@ -109,8 +125,8 @@
 
   // カードを戻す
   function backward() {
-    cardFront.innerHTML = words[--front_card]['en'];
-    cardBack.innerHTML = words[--back_card]['ja'];
+    cardFront.innerHTML = words[--front_card]['fr'];
+    cardBack.innerHTML = words[--back_card]['bk'];
     $("#position_number").text(front_card + 1 + " / " + total);
     card.removeEventListener('transitionend', backward);
     progressbar_display();
@@ -273,7 +289,6 @@
   // シャッフルアルゴリズム(Fisher-Yates)
   function shuffle_cards(words) {
     let i = words.length;
-    debugger;
     while (i) {
       let j = Math.floor(Math.random() * i);
       let t = words[--i];
@@ -283,25 +298,54 @@
     return words;
   }
 
-  // 効果音用スクリプト
-  $('#btn_back').easyAudioEffects({
-    ogg : "./sound/change_card01.ogg",
-    mp3 : "./sound/change_card01.mp3",
-    eventType : 'click',
-    playType : "oneShotMonophonic"
-  });
-  $('#btn_next').easyAudioEffects({
-    ogg : "./sound/change_card01.ogg",
-    mp3 : "./sound/change_card01.mp3",
-    eventType : 'click',
-    playType : "oneShotMonophonic"
-  });
-  $('#btn_role').easyAudioEffects({
-    ogg : "./sound/flip.ogg",
-    mp3 : "./sound/flip.mp3",
-    eventType : 'click',
-    playType : "oneShotMonophonic"
-  });
+  // 効果音機能
+  function sound_effect(){
+    $("#btn_back").toggleClass("sound_active");
+    $("#btn_flip").toggleClass("sound_active");
+    $("#btn_next").toggleClass("sound_active");
+    $('#btn_back').easyAudioEffects({
+      ogg : "./sound/change_card01.ogg",
+      mp3 : "./sound/change_card01.mp3",
+      eventType : 'click',
+      playType : "oneShotMonophonic"
+    });
+    $('#btn_next').easyAudioEffects({
+      ogg : "./sound/change_card01.ogg",
+      mp3 : "./sound/change_card01.mp3",
+      eventType : 'click',
+      playType : "oneShotMonophonic"
+    });
+    $('#btn_flip').easyAudioEffects({
+      ogg : "./sound/flip.ogg",
+      mp3 : "./sound/flip.mp3",
+      eventType : 'click',
+      playType : "oneShotMonophonic"
+    });
+  }
+
+  // チェックマークの表示・非教示機能
+  function filterCheck(){
+    let filterWords = [];
+
+    if($("#checked_hide").hasClass("filter_on")){
+      $.each(words, function(i, val){
+        // チェックマーク非表示
+        if(val.ck === 1){
+          return true;
+        }else {
+          filterWords.push(val);
+          words = filterWords.concat();
+          total = filterWords.length;
+          initial_set();
+        }
+      });
+      // チェックマーク表示
+    } else {
+      total = source_words.length;
+      words = source_words.concat();
+      initial_set();
+    }
+  }
 
 
 })();

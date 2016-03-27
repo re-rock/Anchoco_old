@@ -18,7 +18,6 @@
 </head>
 
 <body>
-  <!-- 次→サウンドの切り替え機能実装 3/24-->
 
   <div class="container-fluid">
     <div class="row">
@@ -43,7 +42,7 @@
           <li class="list-group-item">Select</li>
           <li class="list-group-item">Reverse<input type="checkbox" id="reverse" value="off"></li>
           <li class="list-group-item">Shuffle<input type="checkbox" id="shuffle" value="off"></li>
-          <li class="list-group-item">Hide Checks<input type="checkbox" id="hide_checks" value="off"></li>
+          <li class="list-group-item">Checked Hide <input type="checkbox" id="checked_hide" value="off"></li>
           <li class="list-group-item">Sound<input type="checkbox" id="sound" value="off"></li>
           <li class="list-group-item">Edit</li>
         </ul>
@@ -54,10 +53,10 @@
       <!-- メインパネル -->
       <div id="main_container" class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
 
-        <div id="card_title" class="text-left"></div>
+        <div id="card_title" class="text-center"></div>
 
         <div id="card_number" class="text-center">
-          <p id="position_number" class="text-center"></p>
+          <p id="position_number" class=""></p>
         </div>
         <div class="progressBar">
           <div class="progressBarFrame">
@@ -65,14 +64,20 @@
           </div>
         </div>
 
+        <div id="checkMarks">
+          <span id="checked" class="glyphicon glyphicon-unchecked"  aria-hidden="true"></span>
+          <span id="unchecked" class="glyphicon glyphicon-check" aria-hidden="true"></span>
+        </div>
+
         <div id="card">
           <div id="card-front"></div>
           <div id="card-back"></div>
         </div>
 
+
         <div id="btn_group">
           <div class="card_button" id="btn_back"><i class="fa fa-backward"></i> BACK</div>
-          <div class="card_button" id="btn_role"><i class="fa fa-refresh"></i> FLIP</div>
+          <div class="card_button" id="btn_flip"><i class="fa fa-refresh"></i> FLIP</div>
           <div class="card_button" id="btn_next">NEXT <i class="fa fa-forward"></i></div>
         </div>
 
@@ -80,6 +85,7 @@
 
       <!-- col-sm,col-xsサイズ時の位置調整 -->
       <div class="col-sm-2 col-xs-2"></div>
+
 
       <!-- アドパネル -->
 
@@ -128,7 +134,8 @@
   <!-- script読み込み -->
   <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-  <script src="./js/jquery.easyAudioEffects.min.js"></script>
+  <!-- <script src="./js/jquery.easyAudioEffects.min.js"></script> -->
+  <script src="./js/jquery.easyaudioeffects.js"></script>
   <script src="./js/myscript.js"></script>
   <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
   </script>
