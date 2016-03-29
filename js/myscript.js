@@ -7,7 +7,7 @@
   const source_words = [{
     'fr': '00 was so biside',
     'bk': '00 ひどく取り乱した',
-    'ck': 1
+    'ck': 0
   }, {
     'fr': '01 scarcely',
     'bk': '01 ほとんど〜できなかった',
@@ -27,7 +27,7 @@
   }, {
     'fr': '05 however',
     'bk': '05 どんなに〜でも',
-    'ck': 0
+    'ck': 1
   }, ];
 
   const card = document.getElementById('card');
@@ -87,25 +87,19 @@
   $("#sound").bind('click', function() {
     sound_effect();
   });
-  // チェックマーク反映
-  $("#check").click(function() {
-    $("#check").toggle(false);
-    $("#checked").toggle(true);
-    $("#checkMarks").addClass('1');
-    checkingEffect();
-  });
-  // チェックマーク反映解除
-  $("#checked").click(function() {
-    $("#checked").toggle(false);
-    $("#check").toggle(true);
-    $("#checkMarks").removeClass();
-    checkingEffect();
-  });
 
   // チェックマーク表示・非教示機能
   checked_hide.addEventListener('click',function(){
-    $("#checked_hide").toggleClass("filter_on");
-    checkedFilter();
+    comfirmCheckes();
+  });
+
+  // チェックマーク反映とck=1に
+  $("#check").click(function() {
+    checkmarkSwitch();
+  });
+  // チェックマーク反映解除とck=0へ
+  $("#checked").click(function() {
+    checkmarkSwitch();
   });
 
 
@@ -318,90 +312,116 @@
     return words;
   }
 
-  // ======================= 効果音機能 =======================
-  function sound_effect(){
-    $("#btn_back").toggleClass("sound_active");
-    $("#btn_flip").toggleClass("sound_active");
-    $("#btn_next").toggleClass("sound_active");
-    $('#btn_back').easyAudioEffects({
-      ogg : "./sound/change_card01.ogg",
-      mp3 : "./sound/change_card01.mp3",
-      eventType : 'click',
-      playType : "oneShotMonophonic"
-    });
-    $('#btn_next').easyAudioEffects({
-      ogg : "./sound/change_card01.ogg",
-      mp3 : "./sound/change_card01.mp3",
-      eventType : 'click',
-      playType : "oneShotMonophonic"
-    });
-    $('#btn_flip').easyAudioEffects({
-      ogg : "./sound/flip.ogg",
-      mp3 : "./sound/flip.mp3",
-      eventType : 'click',
-      playType : "oneShotMonophonic"
-    });
-  }
 
-  // ======================= チェックマークの表示・非教示機能 ================
-  function checking_display(){
-    // チェックされていたら(ck = 1)表示
-    if( words[front_card].ck === 1){
-      $("#check").toggle(false);
-      $("#checked").toggle(true);
-    }else {
-      $("#check").show(true);
-      $("#checked").hide(false);
-    }
-  }
-
-
-  // ============== チェックマークをカードに反映・解除機能 ================
-  function checkingEffect() {
-    if($("#checkMarks").hasClass('1')){
-      words[front_card].ck = 1;
-
-    } else {
-      words[front_card].ck = 0;
-    }
-  }
-
-  // ======================= チェックマークのフィルター機能 ================
-  function checkedFilter(){
-    let filterWords = [];
+  // ============ チェックマークされているカードを調べる ============
+  function comfirmCheckes(){
     let checkedNumber = 0;
-
-    // チェックマークフィルター設定
-    if($("#checked_hide").hasClass("filter_on")){
-
-      $.each(words, function(i, val){
-        if(val.ck === 1){
-          checkedNumber++;
-          return true;
-        }else {
-          filterWords.push(val);
-        }
-      });
-      // すべてのカードがチェック済みのケース
-      if(checkedNumber === words.length) {
-        console.log("all checked!!!!!!!");
-        window.alert("all");
-        return false;
+    $.each(words, function(i, val){
+      if(val.ck === 1){
+        checkedNumber++;
+      }
+    });
+    // すべてのカードがチェック済みのケースは無効
+    if(checkedNumber === words.length &&
+      !$("#checked_hide").hasClass()) {
+        $("#checked_hide").prop('checked', false);
 
       } else {
+        // チェックされていないカードがある場合は表示処理へ
+        $("#checked_hide").toggleClass("filter_on");
+        checkedFilter();
+      }
+    }
+
+
+
+    // ============= チェックマークの表示・非教示機能 ================
+    function checking_display(){
+      // チェックされて(ck = 1)いたら表示
+      if( words[front_card].ck === 1){
+        $("#check").toggle(false);
+        $("#checked").toggle(true);
+      }else {
+        $("#check").show(true);
+        $("#checked").hide(false);
+      }
+    }
+
+
+    // ========= チェックマークのディスプレイ切り替えとプロパティ(ck)変更 ===========
+    function checkmarkSwitch(){
+      if ( $("#checkMarks").hasClass('1')){
+        words[front_card].ck = 0;
+        $("#checked").toggle(false);
+        $("#check").toggle(true);
+        $("#checkMarks").removeClass();
+      }else {
+        words[front_card].ck = 1;
+        $("#check").toggle(false);
+        $("#checked").toggle(true);
+        $("#checkMarks").addClass('1');
+      }
+    }
+
+
+    // ======================= チェックマークのフィルター機能 ================
+    function checkedFilter(){
+      let filterWords = [];
+
+      // チェックマークフィルター設定
+      if($("#checked_hide").hasClass("filter_on")){
+
+        $.each(words, function(i, val){
+          if(val.ck === 1){
+            return true;
+          }else {
+            filterWords.push(val);
+          }
+        });
+
         // チェックマーク非表示
         words = filterWords.concat();
         total = filterWords.length;
         front_card = 0;
         back_card = 0;
         initial_set();
-      }
 
-      // フィルター解除（チェックマーク済みも表示）
-    } else {
-      words = source_words.concat();
-      total = source_words.length;
-      initial_set();
+
+        // フィルター解除（チェックマーク済みも表示）
+      } else {
+        words = source_words.concat();
+        total = source_words.length;
+        initial_set();
+      }
     }
-  }
-})();
+
+
+    // ======================= 効果音機能 =======================
+    function sound_effect(){
+      $("#btn_back").toggleClass("sound_active");
+      $("#btn_flip").toggleClass("sound_active");
+      $("#btn_next").toggleClass("sound_active");
+      $('#btn_back').easyAudioEffects({
+        ogg : "./sound/change_card01.ogg",
+        mp3 : "./sound/change_card01.mp3",
+        eventType : 'click',
+        playType : "oneShotMonophonic"
+      });
+      $('#btn_next').easyAudioEffects({
+        ogg : "./sound/change_card01.ogg",
+        mp3 : "./sound/change_card01.mp3",
+        eventType : 'click',
+        playType : "oneShotMonophonic"
+      });
+      $('#btn_flip').easyAudioEffects({
+        ogg : "./sound/flip.ogg",
+        mp3 : "./sound/flip.mp3",
+        eventType : 'click',
+        playType : "oneShotMonophonic"
+      });
+    }
+
+
+  })();
+
+// チェックマークの連動にバグあり。要修正 3/29
