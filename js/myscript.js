@@ -7,19 +7,19 @@
   const source_words = [{
     'fr': '00 was so biside',
     'bk': '00 ひどく取り乱した',
-    'ck': 0
+    'ck': 1
   }, {
     'fr': '01 scarcely',
     'bk': '01 ほとんど〜できなかった',
-    'ck': 0
+    'ck': 1
   }, {
     'fr': '02 tell fact from fiction',
     'bk': '02 現実と虚構の区別',
-    'ck': 0
+    'ck': 1
   }, {
     'fr': '03 novel',
     'bk': '03 小説',
-    'ck': 0
+    'ck': 1
   }, {
     'fr': '04 gift (for) poetry',
     'bk': '04 詩の才能',
@@ -27,7 +27,7 @@
   }, {
     'fr': '05 however',
     'bk': '05 どんなに〜でも',
-    'ck': 1
+    'ck': 0
   }, ];
 
   const card = document.getElementById('card');
@@ -55,6 +55,10 @@
   function title_display (){
     $("#card_title").text(source_title);
   }
+  // ツールチップ
+  $("#btn_back").tooltip();
+  $("#btn_next").tooltip();
+  $("#btn_flip").tooltip();
 
   // カード初期表示
   initial_set();
@@ -83,20 +87,36 @@
   $("#sound").bind('click', function() {
     sound_effect();
   });
+  // チェックマーク反映
+  $("#check").click(function() {
+    $("#check").toggle(false);
+    $("#checked").toggle(true);
+    $("#checkMarks").addClass('1');
+    checkingEffect();
+  });
+  // チェックマーク反映解除
+  $("#checked").click(function() {
+    $("#checked").toggle(false);
+    $("#check").toggle(true);
+    $("#checkMarks").removeClass();
+    checkingEffect();
+  });
+
   // チェックマーク表示・非教示機能
   checked_hide.addEventListener('click',function(){
     $("#checked_hide").toggleClass("filter_on");
-    filterCheck();
+    checkedFilter();
   });
 
 
   // カードの初期表示処理
 
   function initial_set() {
-    cardFront.innerHTML = words[front_card]['fr'];
-    cardBack.innerHTML = words[back_card]['bk'];
+    cardFront.innerHTML = words[front_card].fr;
+    cardBack.innerHTML = words[back_card].bk;
     number_display();
     progressbar_display();
+    checking_display();
   }
 
   // カードの位置数を表示
@@ -111,32 +131,13 @@
     });
     let prog_value = Math.floor((front_card + 1) / total * 100);
     $(".progressBarValue").addClass(`value-${prog_value}`);
-    // $(".progressBarValue").addClass("value-" + prog_value);
   }
 
-  // カードをすすめる
-  function forward() {
-    cardFront.innerHTML = words[++front_card]['fr'];
-    cardBack.innerHTML = words[++back_card]["bk"];
-    $("#position_number").text(front_card + 1 + " / " + total);
-    card.removeEventListener('transitionend', forward);
-    progressbar_display();
-  }
-
-  // カードを戻す
-  function backward() {
-    cardFront.innerHTML = words[--front_card]['fr'];
-    cardBack.innerHTML = words[--back_card]['bk'];
-    $("#position_number").text(front_card + 1 + " / " + total);
-    card.removeEventListener('transitionend', backward);
-    progressbar_display();
-  }
-
-  // ページ進める処理判断
+  // ==================== ページ進める処理 ====================
   function nextCard() {
     var current_num = front_card;
 
-    // 最後のカード位置で進むボタンをおした時
+    // 最後のカード位置で進むボタンをおした時は最初のカードへ
     if (++current_num >= words.length) {
       front_card = -1;
       back_card = -1;
@@ -149,13 +150,23 @@
       forward();
     }
   }
+  // カードをすすめる
+  function forward() {
+    cardFront.innerHTML = words[++front_card].fr;
+    cardBack.innerHTML = words[++back_card].bk;
+    checking_display();
+    $("#position_number").text(front_card + 1 + " / " + total);
+    card.removeEventListener('transitionend', forward);
+    progressbar_display();
+  }
 
-  // ページを戻す処理判断
+
+  // ==================== ページを戻す処理 ====================
 
   function backCard() {
     var current_num = back_card;
 
-    //最初のカード位置で戻るボタンをおした時
+    //最初のカード位置で戻るボタンをおした時最後のカードへ
     if (--current_num < 0) {
       front_card = words.length;
       back_card = words.length;
@@ -167,6 +178,15 @@
     } else {
       backward();
     }
+  }
+  // カードを戻す
+  function backward() {
+    cardFront.innerHTML = words[--front_card].fr;
+    cardBack.innerHTML = words[--back_card].bk;
+    checking_display();
+    $("#position_number").text(front_card + 1 + " / " + total);
+    card.removeEventListener('transitionend', backward);
+    progressbar_display();
   }
 
 
@@ -298,7 +318,7 @@
     return words;
   }
 
-  // 効果音機能
+  // ======================= 効果音機能 =======================
   function sound_effect(){
     $("#btn_back").toggleClass("sound_active");
     $("#btn_flip").toggleClass("sound_active");
@@ -323,29 +343,65 @@
     });
   }
 
-  // チェックマークの表示・非教示機能
-  function filterCheck(){
-    let filterWords = [];
-
-    if($("#checked_hide").hasClass("filter_on")){
-      $.each(words, function(i, val){
-        // チェックマーク非表示
-        if(val.ck === 1){
-          return true;
-        }else {
-          filterWords.push(val);
-          words = filterWords.concat();
-          total = filterWords.length;
-          initial_set();
-        }
-      });
-      // チェックマーク表示
-    } else {
-      total = source_words.length;
-      words = source_words.concat();
-      initial_set();
+  // ======================= チェックマークの表示・非教示機能 ================
+  function checking_display(){
+    // チェックされていたら(ck = 1)表示
+    if( words[front_card].ck === 1){
+      $("#check").toggle(false);
+      $("#checked").toggle(true);
+    }else {
+      $("#check").show(true);
+      $("#checked").hide(false);
     }
   }
 
 
+  // ============== チェックマークをカードに反映・解除機能 ================
+  function checkingEffect() {
+    if($("#checkMarks").hasClass('1')){
+      words[front_card].ck = 1;
+
+    } else {
+      words[front_card].ck = 0;
+    }
+  }
+
+  // ======================= チェックマークのフィルター機能 ================
+  function checkedFilter(){
+    let filterWords = [];
+    let checkedNumber = 0;
+
+    // チェックマークフィルター設定
+    if($("#checked_hide").hasClass("filter_on")){
+
+      $.each(words, function(i, val){
+        if(val.ck === 1){
+          checkedNumber++;
+          return true;
+        }else {
+          filterWords.push(val);
+        }
+      });
+      // すべてのカードがチェック済みのケース
+      if(checkedNumber === words.length) {
+        console.log("all checked!!!!!!!");
+        window.alert("all");
+        return false;
+
+      } else {
+        // チェックマーク非表示
+        words = filterWords.concat();
+        total = filterWords.length;
+        front_card = 0;
+        back_card = 0;
+        initial_set();
+      }
+
+      // フィルター解除（チェックマーク済みも表示）
+    } else {
+      words = source_words.concat();
+      total = source_words.length;
+      initial_set();
+    }
+  }
 })();

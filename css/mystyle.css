@@ -136,21 +136,18 @@ a:hover {
 	height: 1.6em;
 	background: #0866dc;
 }
-
-#checked {
-	margin: 0 90% 0 10%;
-	position: relative;
-	top: -5px;
-	left: 10px;
-	font-size: 20px
+#checkMarks {
+	text-align: left;
+	height: 50px;
+	padding-left: 15px;
+	font-size: 20px;
 }
-#unchecked {
+#checkMarks > span:hover {
+	cursor: pointer;
+}
+#checked {
 	display: none;
-	margin: 0 90% 0 10%;
-	position: relative;
-	top: -5px;
-	left: 10px;
-	font-size: 20px
+
 }
 
 #card {
