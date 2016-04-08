@@ -11,11 +11,11 @@
   }, {
     'fr': '01 scarcely',
     'bk': '01 ほとんど〜できなかった',
-    'ck': 1
+    'ck': 0
   }, {
     'fr': '02 tell fact from fiction',
     'bk': '02 現実と虚構の区別',
-    'ck': 1
+    'ck': 0
   }, {
     'fr': '03 novel',
     'bk': '03 小説',
@@ -43,6 +43,8 @@
   let words = source_words.concat();
   let words_at_reverse = source_words.concat();
   let words_at_shuffle;
+  let filterWords = [];
+
 
 
   // 現在の表カードの位置番号
@@ -55,10 +57,6 @@
   function title_display (){
     $("#card_title").text(source_title);
   }
-  // ツールチップ
-  $("#btn_back").tooltip();
-  $("#btn_next").tooltip();
-  $("#btn_flip").tooltip();
 
   // カード初期表示
   initial_set();
@@ -87,12 +85,10 @@
   $("#sound").bind('click', function() {
     sound_effect();
   });
-
   // チェックマーク表示・非教示機能
   checked_hide.addEventListener('click',function(){
     comfirmCheckes();
   });
-
   // チェックマーク反映とck=1に
   $("#check").click(function() {
     checkmarkSwitch();
@@ -218,22 +214,20 @@
         words = words_at_shuffle.concat();
         words = words.reverse();
         words_at_reverse = words.concat();
-        front_card = 0;
-        back_card = 0;
-        initial_set();
-        if (card.className === 'open') {
-          flip();
-        }
+        cardSetting();
+
+        // チェックマークオンの場合
+      } else if ($("#checked_hide").hasClass("filter_on")){
+        words = filterWords.concat();
+        words = words.reverse();
+        words_at_reverse = words.concat();
+        cardSetting();
+
         // シャッフル機能オフの時
       } else {
         words = source_words.concat();
         words = words.reverse();
-        front_card = 0;
-        back_card = 0;
-        initial_set();
-        if (card.className === 'open') {
-          flip();
-        }
+        cardSetting();
       }
 
     } else { // リバース機能オン→オフ
@@ -242,6 +236,18 @@
       // シャッフル機能オンの時
       if ($("#shuffle").attr("value") === "on") {
         words = words_at_shuffle.concat();
+        front_card = 0;
+        back_card = 0;
+        if (card.className === 'open') {
+          card.addEventListener('transitionend', backward);
+          flip();
+          initial_set();
+        } else {
+          initial_set();
+        }
+        // チェックマーク非表示機能オンの時
+      } else if ($("#checked_hide").hasClass("filter_on")){
+        words = filterWords.concat();
         front_card = 0;
         back_card = 0;
         if (card.className === 'open') {
@@ -314,114 +320,165 @@
 
 
   // ============ チェックマークされているカードを調べる ============
+
   function comfirmCheckes(){
+
+    // すべてのカードがチェック済みの場合は無効
+    if (findCheckedmarks()){
+      // Hide機能が有効な場合、チェックマークを選択不可にする
+      if(!$("#checked_hide").hasClass()) {
+        $("#checked_hide").prop('checked', false);
+        $("#checked_hide").attr('disabled', 'disabled');
+      }
+    } else {
+
+      // チェックされていないカードがある場合は表示処理へ
+      $("#checked_hide").toggleClass("filter_on");
+      checkedFilter();
+    }
+  }
+
+
+  // ============= チェックマークの表示・非教示機能 ================
+  function checking_display(){
+    // チェックされて(ck = 1)いたら表示
+    if( words[front_card].ck === 1){
+      $("#checkMarks").addClass('1');
+      $("#check").toggle(false);
+      $("#checked").toggle(true);
+    }else {
+      $("#checkMarks").removeClass();
+      $("#check").show(true);
+      $("#checked").hide(false);
+    }
+  }
+
+
+  // ======= チェックマークのディスプレイ切り替えとプロパティ(ck)変更 =======
+  function checkmarkSwitch(){
+    // checked → check
+    if ($("#checkMarks").hasClass('1')){
+      words[front_card].ck = 0;
+      $("#checked").toggle(false);
+      $("#check").toggle(true);
+      $("#checkMarks").removeClass();
+      $("#checked_hide").removeAttr('disabled');
+
+      // check → checked
+    } else {
+      words[front_card].ck = 1;
+      $("#check").toggle(false);
+      $("#checked").toggle(true);
+      $("#checkMarks").addClass('1');
+
+      // すべてのカードがチェック済みになったときのHIDE機能の切り替え判断
+      if(findCheckedmarks()){
+        // チェックマークがONの時はOFFの戻す
+        if($("#checked_hide").hasClass("filter_on")){
+          $("#checked_hide").removeClass();
+          $("#checked_hide").prop('checked', false);
+          words = source_words.concat();
+          total = source_words.length;
+          initial_set();
+
+        } else {
+          // チェックマークがOffの時はOnのに切り替えられないようにする
+          $("#checked_hide").attr('disabled', 'disabled');
+
+        }
+      }
+    }
+  }
+
+  // すべてのカードがチェック済みかを検査する
+  function findCheckedmarks() {
     let checkedNumber = 0;
-    $.each(words, function(i, val){
-      if(val.ck === 1){
+    for (let i = 0; i < source_words.length; i++){
+      if(source_words[i].ck === 1){
         checkedNumber++;
       }
+    }
+    if(checkedNumber === source_words.length) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
+  // ======================= チェックマークのフィルター機能 ================
+  function checkedFilter(){
+
+    // チェックマークフィルター設定
+    if($("#checked_hide").hasClass("filter_on")){
+
+      $.each(words, function(i, val){
+        if(val.ck === 1){
+          return true;
+        } else {
+          filterWords.push(val);
+        }
+      });
+
+      // チェックマーク非表示
+      words = filterWords.concat();
+      total = filterWords.length;
+      front_card = 0;
+      back_card = 0;
+      initial_set();
+
+
+      // フィルター解除（チェックマーク済みも表示）
+    } else {
+      words = source_words.concat();
+      total = source_words.length;
+      initial_set();
+    }
+  }
+
+
+
+  // ======================= 効果音機能 =======================
+
+  function sound_effect(){
+    $("#btn_back").toggleClass("sound_active");
+    $("#btn_flip").toggleClass("sound_active");
+    $("#btn_next").toggleClass("sound_active");
+    $('#btn_back').easyAudioEffects({
+      ogg : "./sound/change_card01.ogg",
+      mp3 : "./sound/change_card01.mp3",
+      eventType : 'click',
+      playType : "oneShotMonophonic"
     });
-    // すべてのカードがチェック済みのケースは無効
-    if(checkedNumber === words.length &&
-      !$("#checked_hide").hasClass()) {
-        $("#checked_hide").prop('checked', false);
+    $('#btn_next').easyAudioEffects({
+      ogg : "./sound/change_card01.ogg",
+      mp3 : "./sound/change_card01.mp3",
+      eventType : 'click',
+      playType : "oneShotMonophonic"
+    });
+    $('#btn_flip').easyAudioEffects({
+      ogg : "./sound/flip.ogg",
+      mp3 : "./sound/flip.mp3",
+      eventType : 'click',
+      playType : "oneShotMonophonic"
+    });
+  }
 
-      } else {
-        // チェックされていないカードがある場合は表示処理へ
-        $("#checked_hide").toggleClass("filter_on");
-        checkedFilter();
-      }
+  function cardSetting(){
+    front_card = 0;
+    back_card = 0;
+    initial_set();
+    if (card.className === 'open') {
+      flip();
     }
+  }
 
 
-
-    // ============= チェックマークの表示・非教示機能 ================
-    function checking_display(){
-      // チェックされて(ck = 1)いたら表示
-      if( words[front_card].ck === 1){
-        $("#check").toggle(false);
-        $("#checked").toggle(true);
-      }else {
-        $("#check").show(true);
-        $("#checked").hide(false);
-      }
-    }
+})();
 
 
-    // ========= チェックマークのディスプレイ切り替えとプロパティ(ck)変更 ===========
-    function checkmarkSwitch(){
-      if ( $("#checkMarks").hasClass('1')){
-        words[front_card].ck = 0;
-        $("#checked").toggle(false);
-        $("#check").toggle(true);
-        $("#checkMarks").removeClass();
-      }else {
-        words[front_card].ck = 1;
-        $("#check").toggle(false);
-        $("#checked").toggle(true);
-        $("#checkMarks").addClass('1');
-      }
-    }
-
-
-    // ======================= チェックマークのフィルター機能 ================
-    function checkedFilter(){
-      let filterWords = [];
-
-      // チェックマークフィルター設定
-      if($("#checked_hide").hasClass("filter_on")){
-
-        $.each(words, function(i, val){
-          if(val.ck === 1){
-            return true;
-          }else {
-            filterWords.push(val);
-          }
-        });
-
-        // チェックマーク非表示
-        words = filterWords.concat();
-        total = filterWords.length;
-        front_card = 0;
-        back_card = 0;
-        initial_set();
-
-
-        // フィルター解除（チェックマーク済みも表示）
-      } else {
-        words = source_words.concat();
-        total = source_words.length;
-        initial_set();
-      }
-    }
-
-
-    // ======================= 効果音機能 =======================
-    function sound_effect(){
-      $("#btn_back").toggleClass("sound_active");
-      $("#btn_flip").toggleClass("sound_active");
-      $("#btn_next").toggleClass("sound_active");
-      $('#btn_back').easyAudioEffects({
-        ogg : "./sound/change_card01.ogg",
-        mp3 : "./sound/change_card01.mp3",
-        eventType : 'click',
-        playType : "oneShotMonophonic"
-      });
-      $('#btn_next').easyAudioEffects({
-        ogg : "./sound/change_card01.ogg",
-        mp3 : "./sound/change_card01.mp3",
-        eventType : 'click',
-        playType : "oneShotMonophonic"
-      });
-      $('#btn_flip').easyAudioEffects({
-        ogg : "./sound/flip.ogg",
-        mp3 : "./sound/flip.mp3",
-        eventType : 'click',
-        playType : "oneShotMonophonic"
-      });
-    }
-
-
-  })();
-
-// チェックマークの連動にバグあり。要修正 3/29
+// $("#listForCheckmark").tooltip({trigger:"hover"}).on("shown.bs.tooltip", function(e) {
+//   setTimeout(function () {
+//     $(e.target).tooltip("hide");
+//   }, 3000);
+// });
