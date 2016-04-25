@@ -1,0 +1,25 @@
+{
+  "name": "anchoco",
+  "version": "1.0.0",
+  "description": "Anchocoの使い方",
+  "main": "index.html",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^2.7.0",
+    "eslint-config-airbnb": "^6.2.0",
+    "eslint-plugin-react": "^4.3.0"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/re-rock/Anchoco.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/re-rock/Anchoco/issues"
+  },
+  "homepage": "https://github.com/re-rock/Anchoco#readme"
+}

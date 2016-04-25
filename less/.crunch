@@ -1,0 +1,21 @@
+{
+	"files": {
+		"variables.less": {
+			"engines": [
+				{
+					"compiler": "less",
+					"output": "../../variables.css",
+					"options": {
+						"compress": false,
+						"ieCompat": false,
+						"strictMath": false,
+						"strictUnits": false,
+						"javascriptEnabled": false,
+						"sourcemap": true
+					}
+				}
+			],
+			"sources": []
+		}
+	}
+}
