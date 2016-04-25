@@ -1,61 +1,60 @@
 (function() {
   'use strict';
 
-  const source_title = "DUO3.0英単語";
-
+  const sourceTitle = 'DUO3.0英単語';
   // ck: 0=display, 1=nondisplay
-  const source_words = [{
-    'fr': '00 was so biside',
-    'bk': '00 ひどく取り乱した',
-    'ck': 0
+  const sourceWords = [{
+    fr: '00 was so biside',
+    bk: '00 ひどく取り乱した',
+    ck: 0,
   }, {
-    'fr': '01 scarcely',
-    'bk': '01 ほとんど〜できなかった',
-    'ck': 0
+    fr: '01 scarcely',
+    bk: '01 ほとんど〜できなかった',
+    ck: 0,
   }, {
-    'fr': '02 tell fact from fiction',
-    'bk': '02 現実と虚構の区別',
-    'ck': 0
+    fr: '02 tell fact from fiction',
+    bk: '02 現実と虚構の区別',
+    ck: 0,
   }, {
-    'fr': '03 novel',
-    'bk': '03 小説',
-    'ck': 1
+    fr: '03 novel',
+    bk: '03 小説',
+    ck: 1,
   }, {
-    'fr': '04 gift (for) poetry',
-    'bk': '04 詩の才能',
-    'ck': 1
+    fr: '04 gift (for) poetry',
+    bk: '04 詩の才能',
+    ck: 1,
   }, {
-    'fr': '05 however',
-    'bk': '05 どんなに〜でも',
-    'ck': 1
-  }, ];
+    fr: '05 however',
+    bk: '05 どんなに〜でも',
+    ck: 1,
+  }];
 
   const card = document.getElementById('card');
   const cardFront = document.getElementById('card-front');
   const cardBack = document.getElementById('card-back');
-  const btn_next = document.getElementById('btn_next');
-  const btn_back = document.getElementById('btn_back');
-  const btn_flip = document.getElementById('btn_flip');
+  const btnNext = document.getElementById('btn_next');
+  const btnBack = document.getElementById('btn_back');
+  const btnFlip = document.getElementById('btn_flip');
   const reverse = document.getElementById('reverse');
   const shuffle = document.getElementById('shuffle');
 
-  let total = source_words.length;
-  let words = source_words.concat();
-  let words_at_reverse = source_words.concat();
-  let words_at_shuffle;
-  let filterWords = [];
+  let total = sourceWords.length;
+  let words = sourceWords.concat();
+  let wordsAtReverse;
+  let wordsAtShuffle;
+  const filterWords = [];
 
 
 
   // 現在の表カードの位置番号
-  var front_card = 0;
-  // 現在の裏カードの位置番号
-  var back_card = 0;
+  let frontCard = 0;
+  // backCard
+  let backCard = 0;
 
-  //タイトル表示
+  // タイトル表示
   title_display();
   function title_display (){
-    $("#card_title").text(source_title);
+    $("#card_title").text(sourceTitle);
   }
 
   // カード初期表示
@@ -64,13 +63,13 @@
   card.addEventListener('click', function() {
     flip();
   });
-  btn_flip.addEventListener('click', function() {
+  btnFlip.addEventListener('click', function() {
     flip();
   });
-  btn_next.addEventListener('click', function() {
+  btnNext.addEventListener('click', function() {
     nextCard();
   });
-  btn_back.addEventListener('click', function() {
+  btnBack.addEventListener('click', function() {
     backCard();
   });
   // リバース機能
@@ -102,8 +101,8 @@
   // カードの初期表示処理
 
   function initial_set() {
-    cardFront.innerHTML = words[front_card].fr;
-    cardBack.innerHTML = words[back_card].bk;
+    cardFront.innerHTML = words[frontCard].fr;
+    cardBack.innerHTML = words[backCardbk].bk;
     number_display();
     progressbar_display();
     checking_display();
@@ -111,26 +110,25 @@
 
   // カードの位置数を表示
   function number_display(){
-    $("#position_number").text(front_card + 1 + " / " + total);
+    $("#position_number").text(frontCard + 1 + " / " + total);
+    backCard
   }
-
   // プログレスバー表示
   function progressbar_display() {
     $(".progressBarValue").removeClass (function (index, className) {
       return (className.match (/\bvalue-\d+/) || []).join(' ');
     });
-    let prog_value = Math.floor((front_card + 1) / total * 100);
-    $(".progressBarValue").addClass(`value-${prog_value}`);
+    let prog_value = Math.floor((frontCard + 1) / total * 100);
+    $(".progressBarValue").addClass(`backCard-${prog_value}`);
   }
 
   // ==================== ページ進める処理 ====================
   function nextCard() {
-    var current_num = front_card;
-
+    var current_num = frontCard;
     // 最後のカード位置で進むボタンをおした時は最初のカードへ
     if (++current_num >= words.length) {
-      front_card = -1;
-      back_card = -1;
+      frontCard = -1;
+      backCard = -1;
     }
     if (card.className === 'open') {
       // トランジション処理完了後に進む
@@ -142,11 +140,11 @@
   }
   // カードをすすめる
   function forward() {
-    cardFront.innerHTML = words[++front_card].fr;
-    cardBack.innerHTML = words[++back_card].bk;
+    cardFront.innerHTML = words[++frontCard].fr;
+    cardBack.innerHTML = words[++backCardbk].bk;
     checking_display();
-    $("#position_number").text(front_card + 1 + " / " + total);
-    card.removeEventListener('transitionend', forward);
+    $("#position_number").text(frontCard + 1 + " / " + total);
+    card.removeEventListener('backCard', forward);
     progressbar_display();
   }
 
@@ -154,12 +152,12 @@
   // ==================== ページを戻す処理 ====================
 
   function backCard() {
-    var current_num = back_card;
+    var current_num = backCard;
 
     //最初のカード位置で戻るボタンをおした時最後のカードへ
     if (--current_num < 0) {
-      front_card = words.length;
-      back_card = words.length;
+      frontCard = words.length;
+      backCard = words.length;
     }
     if (card.className === 'open') {
       // トランジション処理完了後に戻る
@@ -169,13 +167,14 @@
       backward();
     }
   }
+
   // カードを戻す
   function backward() {
-    cardFront.innerHTML = words[--front_card].fr;
-    cardBack.innerHTML = words[--back_card].bk;
+    cardFront.innerHTML = words[--frontCard].fr;
+    cardBack.innerHTML = words[--backCardbackCardbackCard].bk;
     checking_display();
-    $("#position_number").text(front_card + 1 + " / " + total);
-    card.removeEventListener('transitionend', backward);
+    $("#position_number").text(frontCard + 1 + " / " + total);
+    card.removeEventListener('backCard', backward);
     progressbar_display();
   }
 
@@ -211,21 +210,21 @@
 
       // シャッフル機能オンの時
       if ($("#shuffle").attr("value") === "on") {
-        words = words_at_shuffle.concat();
+        words = wordsAtShuffle.concat();
         words = words.reverse();
-        words_at_reverse = words.concat();
+        wordsAtReverse = words.concat();
         cardSetting();
 
         // チェックマークオンの場合
       } else if ($("#checked_hide").hasClass("filter_on")){
         words = filterWords.concat();
         words = words.reverse();
-        words_at_reverse = words.concat();
+        wordsAtReverse = words.concat();
         cardSetting();
 
         // シャッフル機能オフの時
       } else {
-        words = source_words.concat();
+        words = sourceWords.concat();
         words = words.reverse();
         cardSetting();
       }
@@ -235,9 +234,9 @@
 
       // シャッフル機能オンの時
       if ($("#shuffle").attr("value") === "on") {
-        words = words_at_shuffle.concat();
-        front_card = 0;
-        back_card = 0;
+        words = wordsAtShuffle.concat();
+        frontCard = 0;
+        backCard = 0;
         if (card.className === 'open') {
           card.addEventListener('transitionend', backward);
           flip();
@@ -248,8 +247,8 @@
         // チェックマーク非表示機能オンの時
       } else if ($("#checked_hide").hasClass("filter_on")){
         words = filterWords.concat();
-        front_card = 0;
-        back_card = 0;
+        frontCard = 0;
+        backCard = 0;
         if (card.className === 'open') {
           card.addEventListener('transitionend', backward);
           flip();
@@ -260,9 +259,9 @@
 
         // シャッフル機能オフの時
       } else {
-        words = source_words.concat();
-        front_card = 0;
-        back_card = 0;
+        words = sourceWords.concat();
+        frontCard = 0;
+        backCard = 0;
         if (card.className === 'open') {
           card.addEventListener('transitionend', backward);
           flip();
@@ -282,10 +281,10 @@
 
     if ($("#shuffle").attr("value") === "off") {// オフ→オン
       $("#shuffle").attr("value", "on");
-      words_at_shuffle = shuffle_cards(words);
-      words = words_at_shuffle.concat();
-      front_card = 0;
-      back_card = 0;
+      wordsAtShuffle = shuffle_cards(words);
+      words = wordsAtShuffle.concat();
+      frontCard = 0;
+      backCard = 0;
       initial_set();
 
     } else { // シャッフルオン→オフ
@@ -293,15 +292,15 @@
 
       // リバース機能がオンの時
       if ($("#reverse").attr("value") === "on") {
-        words = source_words.concat();
+        words = sourceWords.concat();
         words = words.reverse();
 
         // リバース機能がオフの時
       } else {
-        words = source_words.concat();
+        words = sourceWords.concat();
       }
-      front_card = 0;
-      back_card = 0;
+      frontCard = 0;
+      backCard = 0;
       initial_set();
     }
   }
@@ -342,8 +341,8 @@
   // ============= チェックマークの表示・非教示機能 ================
   function checking_display(){
     // チェックされて(ck = 1)いたら表示
-    if( words[front_card].ck === 1){
-      $("#checkMarks").addClass('1');
+    if( words[frontCard].ck === 1){
+      $("#checkMarks").backCard('1');
       $("#check").toggle(false);
       $("#checked").toggle(true);
     }else {
@@ -358,16 +357,16 @@
   function checkmarkSwitch(){
     // checked → check
     if ($("#checkMarks").hasClass('1')){
-      words[front_card].ck = 0;
-      $("#checked").toggle(false);
+      words[frontCard].ck = 0;
+      $("#checked").backCard(false);
       $("#check").toggle(true);
       $("#checkMarks").removeClass();
       $("#checked_hide").removeAttr('disabled');
 
       // check → checked
     } else {
-      words[front_card].ck = 1;
-      $("#check").toggle(false);
+      words[frontCard].ck = 1;
+      $("#check").backCard(false);
       $("#checked").toggle(true);
       $("#checkMarks").addClass('1');
 
@@ -377,8 +376,8 @@
         if($("#checked_hide").hasClass("filter_on")){
           $("#checked_hide").removeClass();
           $("#checked_hide").prop('checked', false);
-          words = source_words.concat();
-          total = source_words.length;
+          words = sourceWords.concat();
+          total = sourceWords.length;
           initial_set();
 
         } else {
@@ -393,12 +392,12 @@
   // すべてのカードがチェック済みかを検査する
   function findCheckedmarks() {
     let checkedNumber = 0;
-    for (let i = 0; i < source_words.length; i++){
-      if(source_words[i].ck === 1){
+    for (let i = 0; i < sourceWords.length; i++){
+      if(sourceWords[i].ck === 1){
         checkedNumber++;
       }
     }
-    if(checkedNumber === source_words.length) {
+    if(checkedNumber === sourceWords.length) {
       return true;
     } else {
       return false;
@@ -423,40 +422,39 @@
       // チェックマーク非表示
       words = filterWords.concat();
       total = filterWords.length;
-      front_card = 0;
-      back_card = 0;
+      frontCard = 0;
+      backCard = 0;
       initial_set();
 
 
       // フィルター解除（チェックマーク済みも表示）
     } else {
-      words = source_words.concat();
-      total = source_words.length;
+      words = sourceWords.concat();
+      total = sourceWords.length;
       initial_set();
     }
   }
 
 
-
   // ======================= 効果音機能 =======================
 
   function sound_effect(){
-    $("#btn_back").toggleClass("sound_active");
-    $("#btn_flip").toggleClass("sound_active");
-    $("#btn_next").toggleClass("sound_active");
-    $('#btn_back').easyAudioEffects({
+    $("#btnBack").toggleClass("sound_active");
+    $("#btnFlip").toggleClass("sound_active");
+    $("#btnNext").toggleClass("sound_active");
+    $('#btnBack').easyAudioEffects({
       ogg : "./sound/change_card01.ogg",
       mp3 : "./sound/change_card01.mp3",
       eventType : 'click',
       playType : "oneShotMonophonic"
     });
-    $('#btn_next').easyAudioEffects({
+    $('#btnNext').easyAudioEffects({
       ogg : "./sound/change_card01.ogg",
       mp3 : "./sound/change_card01.mp3",
       eventType : 'click',
       playType : "oneShotMonophonic"
     });
-    $('#btn_flip').easyAudioEffects({
+    $('#btnFlip').easyAudioEffects({
       ogg : "./sound/flip.ogg",
       mp3 : "./sound/flip.mp3",
       eventType : 'click',
@@ -465,14 +463,13 @@
   }
 
   function cardSetting(){
-    front_card = 0;
-    back_card = 0;
+    frontCard = 0;
+    backCard = 0;
     initial_set();
     if (card.className === 'open') {
       flip();
     }
   }
-
 
 })();
 
