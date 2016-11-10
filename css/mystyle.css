@@ -8,7 +8,7 @@ body {
 	margin: 0;
 	text-align: center;
 	color: #253A54;
-	background-image: url(../img/1.png);
+	background-image: url(../img/2.jpg);
 }
 .container-fluid {
 	margin: 0 auto
@@ -43,7 +43,7 @@ h4:hover {
 }
 .menu_item {
 	float: left;
-	width: 60px;
+	width: 78px;
 	margin-right: 10px;
 }
 .menu_item:last-child {
@@ -62,13 +62,15 @@ a:hover {
 	transition: all .3s ease-in-out;
 }
 /********************   left_container  ******************/
+
 #set_list {
 	width: 200px;
 	border: 1px solid #888888;
-	margin-left: 20px;
 	border-radius: 5px 5px;
 	box-shadow: 2px 2px 1px #888;
 	font-weight: bold;
+	margin: 0 auto;
+	width: 230px;
 }
 #set_list > li {
 	color: #888888;
@@ -102,17 +104,25 @@ a:hover {
 }
 
 /********************   main_container  ******************/
+
 #card_title {
 	font-size: 20px;
-	margin: 0 auto 15px auto;
+	font-weight: bold;
+	margin: 0 0 20px 0;
 }
 #card_number {
+	height: 20px;
 	font-weight: bold;
 	letter-spacing: 1px;
 }
+#position_number {
+	height: 20px;
+	width: 150px;
+	margin-left: 39%;
+}
 .progressBar {
 	float: left;
-	margin: 0 66% 0 34%;
+	margin: 0 38%;
 	height: 20px;
 }
 .progressBarFrame {
@@ -126,16 +136,24 @@ a:hover {
 	height: 1.6em;
 	background: #0866dc;
 }
-#checkmark {
-	margin: 0 10% 0 90%;
-	height: 20px;
-	width: 30px;
+#checkMarks {
+	text-align: left;
+	height: 50px;
+	padding-left: 15px;
+	font-size: 20px;
+}
+#checkMarks > span:hover {
+	cursor: pointer;
+}
+#checked {
+	display: none;
+
 }
 
 #card {
 	box-shadow: 1px 1px 3px #888888;
 	letter-spacing: 1px;
-	margin: 20px auto 10px auto;
+	margin: 5px auto 10px auto;
 	width: 474px;
 	height: 150px;
 	cursor: pointer;
@@ -198,7 +216,7 @@ div#btn_back {
 	width: 80px;
 
 }
-#btn_role {
+#btn_flip {
 	border-right: 1px solid rgb(228, 214, 169);
 	width: 100px;
 }
@@ -238,4 +256,4 @@ footer {
 }
 
 /* progressBar表示用クラス */
-.value-00{width:0%;}.value-01{width:1%;}.value-02{width:2%;}.value-03{width:3%;}.value-04{width:4%;}.value-05{width:5%;}.value-06{width:6%;}.value-07{width:7%;}.value-08{width:8%;}.value-09{width:9%;}.value-10{width:10%;}.value-11{width:11%;}.value-12{width:12%;}.value-13{width:13%;}.value-14{width:14%;}.value-15{width:15%;}.value-16{width:16%;}.value-17{width:17%;}.value-18{width:18%;}.value-19{width:19%;}.value-20{width:20%;}.value-21{width:21%;}.value-22{width:22%;}.value-23{width:23%;}.value-24{width:24%;}.value-25{width:25%;}.value-26{width:26%;}.value-27{width:27%;}.value-28{width:28%;}.value-29{width:29%;}.value-30{width:30%;}.value-31{width:31%;}.value-32{width:32%;}.value-33{width:33%;}.value-34{width:34%;}.value-35{width:35%;}.value-36{width:36%;}.value-37{width:37%;}.value-38{width:38%;}.value-39{width:39%;}.value-40{width:40%;}.value-41{width:41%;}.value-42{width:42%;}.value-43{width:43%;}.value-44{width:44%;}.value-45{width:45%;}.value-46{width:46%;}.value-47{width:47%;}.value-48{width:48%;}.value-49{width:49%;}.value-50{width:50%;}.value-51{width:51%;}.value-52{width:52%;}.value-53{width:53%;}.value-54{width:54%;}.value-55{width:55%;}.value-56{width:56%;}.value-57{width:57%;}.value-58{width:58%;}.value-59{width:59%;}.value-60{width:60%;}.value-61{width:61%;}.value-62{width:62%;}.value-63{width:63%;}.value-64{width:64%;}.value-65{width:65%;}.value-66{width:66%;}.value-67{width:67%;}.value-68{width:68%;}.value-69{width:69%;}.value-70{width:70%;}.value-71{width:71%;}.value-72{width:72%;}.value-73{width:73%;}.value-74{width:74%;}.value-75{width:75%;}.value-76{width:76%;}.value-77{width:77%;}.value-78{width:78%;}.value-79{width:79%;}.value-80{width:80%;}.value-81{width:81%;}.value-82{width:82%;}.value-83{width:83%;}.value-84{width:84%;}.value-85{width:85%;}.value-86{width:86%;}.value-87{width:87%;}.value-88{width:88%;}.value-89{width:89%;}.value-90{width:90%;}.value-91{width:91%;}.value-92{width:92%;}.value-93{width:93%;}.value-94{width:94%;}.value-95{width:95%;}.value-96{width:96%;}.value-97{width:97%;}.value-98{width:98%;}.value-99{width:99%;}.value-100 {width:100%;}
+.value-0{width:0%;}.value-1{width:1%;}.value-2{width:2%;}.value-3{width:3%;}.value-4{width:4%;}.value-5{width:5%;}.value-6{width:6%;}.value-7{width:7%;}.value-8{width:8%;}.value-9{width:9%;}.value-10{width:10%;}.value-11{width:11%;}.value-12{width:12%;}.value-13{width:13%;}.value-14{width:14%;}.value-15{width:15%;}.value-16{width:16%;}.value-17{width:17%;}.value-18{width:18%;}.value-19{width:19%;}.value-20{width:20%;}.value-21{width:21%;}.value-22{width:22%;}.value-23{width:23%;}.value-24{width:24%;}.value-25{width:25%;}.value-26{width:26%;}.value-27{width:27%;}.value-28{width:28%;}.value-29{width:29%;}.value-30{width:30%;}.value-31{width:31%;}.value-32{width:32%;}.value-33{width:33%;}.value-34{width:34%;}.value-35{width:35%;}.value-36{width:36%;}.value-37{width:37%;}.value-38{width:38%;}.value-39{width:39%;}.value-40{width:40%;}.value-41{width:41%;}.value-42{width:42%;}.value-43{width:43%;}.value-44{width:44%;}.value-45{width:45%;}.value-46{width:46%;}.value-47{width:47%;}.value-48{width:48%;}.value-49{width:49%;}.value-50{width:50%;}.value-51{width:51%;}.value-52{width:52%;}.value-53{width:53%;}.value-54{width:54%;}.value-55{width:55%;}.value-56{width:56%;}.value-57{width:57%;}.value-58{width:58%;}.value-59{width:59%;}.value-60{width:60%;}.value-61{width:61%;}.value-62{width:62%;}.value-63{width:63%;}.value-64{width:64%;}.value-65{width:65%;}.value-66{width:66%;}.value-67{width:67%;}.value-68{width:68%;}.value-69{width:69%;}.value-70{width:70%;}.value-71{width:71%;}.value-72{width:72%;}.value-73{width:73%;}.value-74{width:74%;}.value-75{width:75%;}.value-76{width:76%;}.value-77{width:77%;}.value-78{width:78%;}.value-79{width:79%;}.value-80{width:80%;}.value-81{width:81%;}.value-82{width:82%;}.value-83{width:83%;}.value-84{width:84%;}.value-85{width:85%;}.value-86{width:86%;}.value-87{width:87%;}.value-88{width:88%;}.value-89{width:89%;}.value-90{width:90%;}.value-91{width:91%;}.value-92{width:92%;}.value-93{width:93%;}.value-94{width:94%;}.value-95{width:95%;}.value-96{width:96%;}.value-97{width:97%;}.value-98{width:98%;}.value-99{width:99%;}.value-100{width:100%;}
